@@ -145,15 +145,21 @@ body {
 .event-item {
   display: flex;
   align-items: flex-start;
-  padding: 8px 0;
+  padding: 8px 10px;
   gap: 10px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 3px;
   transition: background 0.15s;
 }
 
+.event-item:last-child {
+  margin-bottom: 0;
+}
+
 .event-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .event-dot {
@@ -598,8 +604,12 @@ body {
   color: #666;
 }
 
-[data-theme="light"] .event-item:hover {
+[data-theme="light"] .event-item {
   background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .event-item:hover {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 [data-theme="light"] .quick-add-toggle {
