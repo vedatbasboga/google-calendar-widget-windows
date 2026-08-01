@@ -88,6 +88,9 @@ async function getEvents() {
 
 async function getTaskItems() {
   const tasks = getTasks();
+  const now = new Date();
+  const nextWeek = new Date(now);
+  nextWeek.setDate(nextWeek.getDate() + 7);
 
   // Get all task lists
   const taskListsRes = await tasks.tasklists.list({ maxResults: 100 });
@@ -97,39 +100,37 @@ async function getTaskItems() {
 
   for (const list of taskLists) {
     try {
+      // Fetch non-completed tasks
       const res = await tasks.tasks.list({
         tasklist: list.id,
         showCompleted: false,
-        showHidden: false,
-        maxResults: 50,
+        showHidden: true,
+        dueMin: now.toISOString(),
+        dueMax: nextWeek.toISOString(),
+        maxResults: 100,
       });
 
       const items = (res.data.items || [])
-        .filter((t) => t.status !== 'completed')
+        .filter((t) => t.status !== 'completed' && t.due)
         .map((t) => ({
           id: t.id,
           taskListId: list.id,
           summary: t.title || '(No title)',
-          start: t.due || null,
+          start: t.due,
           allDay: true,
           type: 'task',
           calendarName: list.title,
           completed: false,
         }));
 
+      console.log(`Task list "${list.title}": ${items.length} tasks`);
       allTasks.push(...items);
     } catch (err) {
       console.error(`Error fetching task list "${list.title}":`, err.message);
     }
   }
 
-  // Tasks with due date first (sorted), then tasks without due date
-  allTasks.sort((a, b) => {
-    if (!a.start && !b.start) return 0;
-    if (!a.start) return 1;
-    if (!b.start) return -1;
-    return new Date(a.start) - new Date(b.start);
-  });
+  allTasks.sort((a, b) => new Date(a.start) - new Date(b.start));
 
   return allTasks;
 }

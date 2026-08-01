@@ -59,22 +59,6 @@ const EventList = {
       container.appendChild(groupDiv);
     }
 
-    // Tasks without a due date at the bottom
-    if (tasksNoDate.length > 0) {
-      const groupDiv = document.createElement('div');
-      groupDiv.className = 'day-group';
-
-      const label = document.createElement('div');
-      label.className = 'day-label';
-      label.textContent = 'No date';
-      groupDiv.appendChild(label);
-
-      for (const task of tasksNoDate) {
-        groupDiv.appendChild(EventItem.render(task));
-      }
-
-      container.appendChild(groupDiv);
-    }
   },
 
   showLoading(container) {

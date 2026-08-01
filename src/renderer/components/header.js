@@ -2,9 +2,14 @@ const Header = {
   render(container) {
     container.innerHTML = `
       <span class="header-date">${DateFormat.formatHeaderDate(new Date())}</span>
+      <button class="header-btn" id="add-btn" title="Add">+</button>
       <button class="header-btn" id="refresh-btn" title="Refresh">&#x21bb;</button>
       <button class="header-btn" id="minimize-btn" title="Hide">&minus;</button>
     `;
+
+    document.getElementById('add-btn').addEventListener('click', () => {
+      QuickAdd.toggle();
+    });
 
     document.getElementById('refresh-btn').addEventListener('click', () => {
       App.refreshEvents();

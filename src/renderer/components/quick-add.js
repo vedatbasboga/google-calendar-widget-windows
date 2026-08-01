@@ -1,12 +1,12 @@
 const QuickAdd = {
   _currentType: 'event',
   _allDay: false,
+  _visible: false,
 
   render(container) {
     const defaults = DateFormat.getDefaultDateTime();
 
     container.innerHTML = `
-      <button class="quick-add-toggle" id="quick-add-toggle">+ Add Event or Task</button>
       <div class="quick-add-form" id="quick-add-form">
         <div class="quick-add-tabs">
           <button class="tab-btn active" data-type="event">Event</button>
@@ -32,16 +32,9 @@ const QuickAdd = {
 
     this._currentType = 'event';
     this._allDay = false;
+    this._visible = false;
 
-    const toggle = document.getElementById('quick-add-toggle');
     const form = document.getElementById('quick-add-form');
-
-    toggle.addEventListener('click', () => {
-      toggle.style.display = 'none';
-      form.classList.add('visible');
-      this._resetForm();
-      document.getElementById('qa-title').focus();
-    });
 
     // Tab switching
     form.querySelectorAll('.tab-btn').forEach((btn) => {
@@ -60,18 +53,34 @@ const QuickAdd = {
     });
 
     document.getElementById('qa-cancel').addEventListener('click', () => {
-      form.classList.remove('visible');
-      toggle.style.display = '';
+      this.hide();
     });
 
     document.getElementById('qa-create').addEventListener('click', () => this._create());
     document.getElementById('qa-title').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') this._create();
-      if (e.key === 'Escape') {
-        form.classList.remove('visible');
-        toggle.style.display = '';
-      }
+      if (e.key === 'Escape') this.hide();
     });
+  },
+
+  toggle() {
+    if (this._visible) {
+      this.hide();
+    } else {
+      this.show();
+    }
+  },
+
+  show() {
+    this._resetForm();
+    document.getElementById('quick-add-form').classList.add('visible');
+    document.getElementById('qa-title').focus();
+    this._visible = true;
+  },
+
+  hide() {
+    document.getElementById('quick-add-form').classList.remove('visible');
+    this._visible = false;
   },
 
   _resetForm() {
@@ -82,6 +91,10 @@ const QuickAdd = {
     document.getElementById('qa-title').value = '';
     document.getElementById('qa-allday').checked = false;
     this._allDay = false;
+    this._currentType = 'event';
+    const form = document.getElementById('quick-add-form');
+    form.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+    form.querySelector('[data-type="event"]').classList.add('active');
     this._updateDateFields();
   },
 
@@ -135,8 +148,7 @@ const QuickAdd = {
     btn.textContent = 'Create';
 
     if (result.success) {
-      document.getElementById('quick-add-form').classList.remove('visible');
-      document.getElementById('quick-add-toggle').style.display = '';
+      this.hide();
       App.refreshEvents();
     }
   },

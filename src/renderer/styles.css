@@ -194,8 +194,7 @@ body {
 
 /* Quick Add */
 #quick-add {
-  padding: 8px 16px 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0 16px;
 }
 
 .quick-add-toggle {
@@ -223,6 +222,8 @@ body {
 
 .quick-add-form.visible {
   display: flex;
+  padding: 8px 0 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .quick-add-form input {
