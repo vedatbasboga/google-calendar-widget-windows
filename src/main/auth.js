@@ -69,7 +69,10 @@ function login() {
     server.listen(8085, 'localhost', () => {
       const authUrl = client.generateAuthUrl({
         access_type: 'offline',
-        scope: ['https://www.googleapis.com/auth/calendar'],
+        scope: [
+          'https://www.googleapis.com/auth/calendar',
+          'https://www.googleapis.com/auth/tasks',
+        ],
         prompt: 'consent',
         redirect_uri: REDIRECT_URI,
       });

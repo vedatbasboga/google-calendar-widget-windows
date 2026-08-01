@@ -5,7 +5,10 @@ contextBridge.exposeInMainWorld('calendarAPI', {
   logout: () => ipcRenderer.invoke('auth:logout'),
   getAuthStatus: () => ipcRenderer.invoke('auth:status'),
   getEvents: () => ipcRenderer.invoke('calendar:getEvents'),
+  getTasks: () => ipcRenderer.invoke('calendar:getTasks'),
   createEvent: (event) => ipcRenderer.invoke('calendar:createEvent', event),
+  createTask: (task) => ipcRenderer.invoke('calendar:createTask', task),
+  completeTask: (data) => ipcRenderer.invoke('calendar:completeTask', data),
   minimizeWindow: () => ipcRenderer.invoke('window:minimize'),
 });
 

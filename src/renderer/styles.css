@@ -319,6 +319,79 @@ body {
   font-size: 13px;
 }
 
+/* Birthday dot */
+.event-dot.birthday {
+  background: #e91e63;
+  border-color: #e91e63;
+}
+
+/* Task items */
+.task-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #888;
+  border-radius: 50%;
+  margin-top: 3px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.task-checkbox:hover {
+  border-color: #4285f4;
+}
+
+.task-checkbox:checked {
+  background: #4285f4;
+  border-color: #4285f4;
+}
+
+.task-completing {
+  opacity: 0.4;
+  text-decoration: line-through;
+  transition: opacity 0.3s;
+}
+
+.task-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 4px;
+}
+
+.task-label {
+  color: #4285f4 !important;
+}
+
+/* Quick Add Tabs */
+.quick-add-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.tab-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #888;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn.active {
+  background: rgba(66, 133, 244, 0.15);
+  border-color: #4285f4;
+  color: #4285f4;
+}
+
 /* Color variants for event dots */
 .event-dot[data-color="1"] { background: #7986cb; border-color: #7986cb; }
 .event-dot[data-color="2"] { background: #33b679; border-color: #33b679; }

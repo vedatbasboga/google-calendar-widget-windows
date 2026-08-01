@@ -30,15 +30,25 @@ const App = {
     const container = document.getElementById('event-list');
     EventList.showLoading(container);
 
-    const result = await window.calendarAPI.getEvents();
+    const [eventsResult, tasksResult] = await Promise.all([
+      window.calendarAPI.getEvents(),
+      window.calendarAPI.getTasks(),
+    ]);
 
-    if (result.success) {
-      EventList.render(container, result.events);
-    } else if (result.error === 'auth_required') {
+    if (eventsResult.error === 'auth_required') {
       this._showAuth();
-    } else {
-      EventList.showError(container, result.error);
+      return;
     }
+
+    const events = eventsResult.success ? eventsResult.events : [];
+    const tasks = tasksResult.success ? tasksResult.tasks : [];
+
+    if (!eventsResult.success && !tasksResult.success) {
+      EventList.showError(container, eventsResult.error || tasksResult.error);
+      return;
+    }
+
+    EventList.render(container, events, tasks);
   },
 
   _showAuth() {
