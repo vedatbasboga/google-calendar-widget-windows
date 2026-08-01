@@ -26,7 +26,6 @@ function registerIpcHandlers() {
       const events = await getEvents();
       return { success: true, events };
     } catch (err) {
-      console.error('getEvents error:', err.message, err.code, err.status);
       if (err.code === 401 || err.status === 401 || err.message?.includes('invalid_grant')) {
         return { success: false, error: 'auth_required' };
       }
@@ -48,7 +47,6 @@ function registerIpcHandlers() {
       const tasks = await getTaskItems();
       return { success: true, tasks };
     } catch (err) {
-      console.error('getTasks error:', err.message);
       return { success: false, error: err.message };
     }
   });

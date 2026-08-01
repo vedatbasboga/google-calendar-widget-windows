@@ -77,7 +77,6 @@ async function getEvents() {
     allEvents.push(...birthdays);
   } catch (err) {
     // Birthdays calendar may not exist
-    console.log('Birthdays calendar not available:', err.message);
   }
 
   // Sort by start time
@@ -123,7 +122,6 @@ async function getTaskItems() {
           completed: false,
         }));
 
-      console.log(`Task list "${list.title}": ${items.length} tasks`);
       allTasks.push(...items);
     } catch (err) {
       console.error(`Error fetching task list "${list.title}":`, err.message);
