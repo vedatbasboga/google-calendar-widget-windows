@@ -1,0 +1,333 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: transparent;
+  color: #e0e0e0;
+  overflow: hidden;
+  user-select: none;
+}
+
+#widget {
+  width: 340px;
+  height: 500px;
+  background: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+#header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  -webkit-app-region: drag;
+}
+
+.header-date {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.header-btn {
+  -webkit-app-region: no-drag;
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.header-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Content */
+#content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#content::-webkit-scrollbar {
+  width: 4px;
+}
+
+#content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+/* Auth Prompt */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.auth-container h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.auth-container p {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.auth-btn {
+  background: #4285f4;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.auth-btn:hover {
+  background: #3367d6;
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Day Group */
+.day-group {
+  padding: 0 16px;
+}
+
+.day-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #888;
+  letter-spacing: 0.5px;
+  padding: 12px 0 6px;
+}
+
+/* Event Item */
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 8px 0;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.event-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.event-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.event-dot.filled {
+  background: #4285f4;
+}
+
+.event-dot.outline {
+  background: transparent;
+  border: 2px solid #4285f4;
+}
+
+.event-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-time {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 1px;
+}
+
+.event-title {
+  font-size: 13px;
+  color: #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Quick Add */
+#quick-add {
+  padding: 8px 16px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.quick-add-toggle {
+  width: 100%;
+  background: none;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  color: #888;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.quick-add-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #bbb;
+}
+
+.quick-add-form {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quick-add-form.visible {
+  display: flex;
+}
+
+.quick-add-form input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.quick-add-form input:focus {
+  border-color: #4285f4;
+}
+
+.quick-add-form input::placeholder {
+  color: #666;
+}
+
+.quick-add-row {
+  display: flex;
+  gap: 8px;
+}
+
+.quick-add-row input {
+  flex: 1;
+}
+
+.quick-add-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-create {
+  background: #4285f4;
+  color: #fff;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-create:hover {
+  background: #3367d6;
+}
+
+.btn-create:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background: rgba(255, 255, 255, 0.08);
+  color: #aaa;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-size: 13px;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-size: 13px;
+}
+
+/* Error */
+.error-msg {
+  text-align: center;
+  padding: 16px;
+  color: #f44336;
+  font-size: 13px;
+}
+
+/* Color variants for event dots */
+.event-dot[data-color="1"] { background: #7986cb; border-color: #7986cb; }
+.event-dot[data-color="2"] { background: #33b679; border-color: #33b679; }
+.event-dot[data-color="3"] { background: #8e24aa; border-color: #8e24aa; }
+.event-dot[data-color="4"] { background: #e67c73; border-color: #e67c73; }
+.event-dot[data-color="5"] { background: #f6bf26; border-color: #f6bf26; }
+.event-dot[data-color="6"] { background: #f4511e; border-color: #f4511e; }
+.event-dot[data-color="7"] { background: #039be5; border-color: #039be5; }
+.event-dot[data-color="8"] { background: #616161; border-color: #616161; }
+.event-dot[data-color="9"] { background: #3f51b5; border-color: #3f51b5; }
+.event-dot[data-color="10"] { background: #0b8043; border-color: #0b8043; }
+.event-dot[data-color="11"] { background: #d50000; border-color: #d50000; }

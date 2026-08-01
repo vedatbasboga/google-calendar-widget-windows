@@ -1,0 +1,27 @@
+{
+  "name": "google-calendar-widget",
+  "version": "1.0.0",
+  "description": "A desktop widget that displays your Google Calendar events",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "googleapis": "^130.0.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.googlecalendarwidget.app",
+    "productName": "Google Calendar Widget",
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    }
+  },
+  "license": "MIT"
+}
