@@ -14,7 +14,16 @@ if (fs.existsSync(envPath)) {
   }
 }
 
-const store = new Store();
+const store = new Store({
+  defaults: {
+    settings: {
+      language: 'en',
+      opacity: 0.92,
+      refreshInterval: 5,
+      theme: 'dark',
+    },
+  },
+});
 
 let mainWindow = null;
 
@@ -60,7 +69,7 @@ function createWindow() {
 app.whenReady().then(() => {
   mainWindow = createWindow();
   createTray(mainWindow);
-  registerIpcHandlers();
+  registerIpcHandlers(store);
 });
 
 app.on('window-all-closed', (e) => {

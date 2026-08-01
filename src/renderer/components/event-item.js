@@ -15,6 +15,8 @@ const EventItem = {
   },
 
   _renderEvent(div, event) {
+    if (event.passed) div.classList.add('event-passed');
+
     const dotClass = event.allDay ? 'outline' : 'filled';
     const timeText = event.allDay ? 'All day' : DateFormat.formatTime(event.start);
     const colorAttr = event.color ? ` data-color="${event.color}"` : '';
@@ -49,28 +51,31 @@ const EventItem = {
 
   _renderTask(div, event) {
     div.className = 'event-item task-item';
+    if (event.completed) div.classList.add('task-completed');
 
     const timeText = event.start ? DateFormat.formatTime(event.start) : 'No date';
 
     div.innerHTML = `
-      <input type="checkbox" class="task-checkbox" title="Complete task">
+      <input type="checkbox" class="task-checkbox" ${event.completed ? 'checked disabled' : ''} title="Complete task">
       <div class="event-info">
         <div class="event-time">${timeText}</div>
         <div class="event-title">${this._escape(event.summary)}</div>
       </div>
     `;
 
-    const checkbox = div.querySelector('.task-checkbox');
-    checkbox.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      checkbox.disabled = true;
-      div.classList.add('task-completing');
-      await window.calendarAPI.completeTask({
-        taskListId: event.taskListId,
-        taskId: event.id,
+    if (!event.completed) {
+      const checkbox = div.querySelector('.task-checkbox');
+      checkbox.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        checkbox.disabled = true;
+        div.classList.add('task-completed');
+        await window.calendarAPI.completeTask({
+          taskListId: event.taskListId,
+          taskId: event.id,
+        });
+        setTimeout(() => App.refreshEvents(), 300);
       });
-      setTimeout(() => App.refreshEvents(), 300);
-    });
+    }
 
     return div;
   },

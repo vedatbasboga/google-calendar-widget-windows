@@ -1,7 +1,16 @@
 const App = {
   refreshTimer: null,
+  settings: null,
 
   async init() {
+    // Load settings first
+    this.settings = await window.calendarAPI.getSettings();
+
+    // Apply settings
+    i18n.setLocale(this.settings.language || 'en');
+    this.applyTheme(this.settings.theme || 'dark');
+    this.applyOpacity(this.settings.opacity || 0.92);
+
     Header.render(document.getElementById('header'));
 
     const { authenticated } = await window.calendarAPI.getAuthStatus();
@@ -60,7 +69,8 @@ const App = {
 
   _startAutoRefresh() {
     this._stopAutoRefresh();
-    this.refreshTimer = setInterval(() => this.refreshEvents(), 5 * 60 * 1000);
+    const interval = (this.settings?.refreshInterval || 5) * 60 * 1000;
+    this.refreshTimer = setInterval(() => this.refreshEvents(), interval);
   },
 
   _stopAutoRefresh() {
@@ -68,6 +78,38 @@ const App = {
       clearInterval(this.refreshTimer);
       this.refreshTimer = null;
     }
+  },
+
+  applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+  },
+
+  applyOpacity(opacity) {
+    const widget = document.getElementById('widget');
+    if (widget) {
+      const theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'light') {
+        widget.style.background = `rgba(245, 245, 245, ${opacity})`;
+      } else {
+        widget.style.background = `rgba(30, 30, 30, ${opacity})`;
+      }
+    }
+  },
+
+  applyLanguage() {
+    // Re-render header and quick-add with new locale
+    Header.render(document.getElementById('header'));
+    const quickAddContainer = document.getElementById('quick-add');
+    if (quickAddContainer.children.length > 0) {
+      QuickAdd.render(quickAddContainer);
+    }
+    // Re-render events to update day labels
+    this.refreshEvents();
+  },
+
+  applyRefreshInterval(minutes) {
+    if (this.settings) this.settings.refreshInterval = minutes;
+    this._startAutoRefresh();
   },
 };
 

@@ -1,6 +1,6 @@
 const DateFormat = {
   formatHeaderDate(date) {
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(i18n.getDateLocale(), {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -13,10 +13,10 @@ const DateFormat = {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    if (this._sameDay(date, today)) return 'Today';
-    if (this._sameDay(date, tomorrow)) return 'Tomorrow';
+    if (this._sameDay(date, today)) return i18n.t('today');
+    if (this._sameDay(date, tomorrow)) return i18n.t('tomorrow');
 
-    return date.toLocaleDateString('en-US', {
+    return date.toLocaleDateString(i18n.getDateLocale(), {
       weekday: 'long',
       month: 'short',
       day: 'numeric',
@@ -25,7 +25,7 @@ const DateFormat = {
 
   formatTime(dateStr) {
     const date = new Date(dateStr);
-    return date.toLocaleTimeString('en-US', {
+    return date.toLocaleTimeString(i18n.getDateLocale(), {
       hour: 'numeric',
       minute: '2-digit',
       hour12: false,

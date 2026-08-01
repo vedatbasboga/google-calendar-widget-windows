@@ -2,7 +2,7 @@ const { ipcMain, BrowserWindow } = require('electron');
 const { login, logout, isAuthenticated } = require('./auth');
 const { getEvents, getTaskItems, createEvent, createTask, completeTask } = require('./calendar-api');
 
-function registerIpcHandlers() {
+function registerIpcHandlers(store) {
   ipcMain.handle('auth:login', async () => {
     try {
       await login();
@@ -67,6 +67,17 @@ function registerIpcHandlers() {
     } catch (err) {
       return { success: false, error: err.message };
     }
+  });
+
+  ipcMain.handle('settings:get', () => {
+    return store.get('settings');
+  });
+
+  ipcMain.handle('settings:set', (_event, newSettings) => {
+    const current = store.get('settings');
+    const merged = { ...current, ...newSettings };
+    store.set('settings', merged);
+    return merged;
   });
 
   ipcMain.handle('window:minimize', (event) => {

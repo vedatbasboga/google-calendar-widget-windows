@@ -12,6 +12,8 @@ function getTasks() {
 async function getEvents() {
   const calendar = getCalendar();
   const now = new Date();
+  const todayStart = new Date(now);
+  todayStart.setHours(0, 0, 0, 0);
   const nextWeek = new Date(now);
   nextWeek.setDate(nextWeek.getDate() + 7);
 
@@ -25,24 +27,28 @@ async function getEvents() {
     try {
       const res = await calendar.events.list({
         calendarId: cal.id,
-        timeMin: now.toISOString(),
+        timeMin: todayStart.toISOString(),
         timeMax: nextWeek.toISOString(),
         singleEvents: true,
         orderBy: 'startTime',
         maxResults: 50,
       });
 
-      const events = (res.data.items || []).map((event) => ({
-        id: event.id,
-        summary: event.summary || '(No title)',
-        start: event.start.dateTime || event.start.date,
-        end: event.end.dateTime || event.end.date,
-        allDay: !event.start.dateTime,
-        color: event.colorId || cal.colorId || null,
-        htmlLink: event.htmlLink,
-        type: 'event',
-        calendarName: cal.summary,
-      }));
+      const events = (res.data.items || []).map((event) => {
+        const end = event.end.dateTime || event.end.date;
+        return {
+          id: event.id,
+          summary: event.summary || '(No title)',
+          start: event.start.dateTime || event.start.date,
+          end,
+          allDay: !event.start.dateTime,
+          color: event.colorId || cal.colorId || null,
+          htmlLink: event.htmlLink,
+          type: 'event',
+          calendarName: cal.summary,
+          passed: new Date(end) < now,
+        };
+      });
 
       allEvents.push(...events);
     } catch (err) {
@@ -99,10 +105,9 @@ async function getTaskItems() {
 
   for (const list of taskLists) {
     try {
-      // Fetch non-completed tasks
       const res = await tasks.tasks.list({
         tasklist: list.id,
-        showCompleted: false,
+        showCompleted: true,
         showHidden: true,
         dueMin: now.toISOString(),
         dueMax: nextWeek.toISOString(),
@@ -110,7 +115,7 @@ async function getTaskItems() {
       });
 
       const items = (res.data.items || [])
-        .filter((t) => t.status !== 'completed' && t.due)
+        .filter((t) => t.due)
         .map((t) => ({
           id: t.id,
           taskListId: list.id,
@@ -119,7 +124,7 @@ async function getTaskItems() {
           allDay: true,
           type: 'task',
           calendarName: list.title,
-          completed: false,
+          completed: t.status === 'completed',
         }));
 
       allTasks.push(...items);

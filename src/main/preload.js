@@ -10,6 +10,8 @@ contextBridge.exposeInMainWorld('calendarAPI', {
   createTask: (task) => ipcRenderer.invoke('calendar:createTask', task),
   completeTask: (data) => ipcRenderer.invoke('calendar:completeTask', data),
   minimizeWindow: () => ipcRenderer.invoke('window:minimize'),
+  getSettings: () => ipcRenderer.invoke('settings:get'),
+  setSettings: (settings) => ipcRenderer.invoke('settings:set', settings),
 });
 
 contextBridge.exposeInMainWorld('electronAPI', {

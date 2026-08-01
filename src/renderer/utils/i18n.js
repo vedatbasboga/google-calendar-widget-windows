@@ -1,0 +1,87 @@
+const i18n = {
+  locale: 'en',
+
+  translations: {
+    en: {
+      today: 'Today',
+      tomorrow: 'Tomorrow',
+      addEvent: '+ Add event',
+      addTask: '+ Add task',
+      refresh: 'Refresh',
+      hide: 'Hide',
+      settings: 'Settings',
+      add: 'Add',
+      signIn: 'Sign in with Google',
+      signInTitle: 'Google Calendar',
+      signInDesc: 'Sign in to see your events and tasks.',
+      event: 'Event',
+      task: 'Task',
+      eventTitle: 'Event title',
+      taskTitle: 'Task title',
+      startTime: 'Start',
+      endTime: 'End',
+      allDay: 'All day',
+      create: 'Create',
+      cancel: 'Cancel',
+      noEvents: 'No upcoming events',
+      loading: 'Loading...',
+      language: 'Language',
+      opacity: 'Opacity',
+      refreshInterval: 'Refresh interval',
+      theme: 'Theme',
+      dark: 'Dark',
+      light: 'Light',
+      minutes: 'min',
+      close: 'Close',
+      english: 'English',
+      turkish: 'Türkçe',
+    },
+    tr: {
+      today: 'Bugün',
+      tomorrow: 'Yarın',
+      addEvent: '+ Etkinlik ekle',
+      addTask: '+ Görev ekle',
+      refresh: 'Yenile',
+      hide: 'Gizle',
+      settings: 'Ayarlar',
+      add: 'Ekle',
+      signIn: 'Google ile giriş yap',
+      signInTitle: 'Google Takvim',
+      signInDesc: 'Etkinliklerinizi ve görevlerinizi görmek için giriş yapın.',
+      event: 'Etkinlik',
+      task: 'Görev',
+      eventTitle: 'Etkinlik başlığı',
+      taskTitle: 'Görev başlığı',
+      startTime: 'Başlangıç',
+      endTime: 'Bitiş',
+      allDay: 'Tüm gün',
+      create: 'Oluştur',
+      cancel: 'İptal',
+      noEvents: 'Yaklaşan etkinlik yok',
+      loading: 'Yükleniyor...',
+      language: 'Dil',
+      opacity: 'Opaklık',
+      refreshInterval: 'Yenileme süresi',
+      theme: 'Tema',
+      dark: 'Koyu',
+      light: 'Açık',
+      minutes: 'dk',
+      close: 'Kapat',
+      english: 'English',
+      turkish: 'Türkçe',
+    },
+  },
+
+  setLocale(locale) {
+    this.locale = locale;
+  },
+
+  t(key) {
+    const dict = this.translations[this.locale] || this.translations.en;
+    return dict[key] || this.translations.en[key] || key;
+  },
+
+  getDateLocale() {
+    return this.locale === 'tr' ? 'tr-TR' : 'en-US';
+  },
+};
