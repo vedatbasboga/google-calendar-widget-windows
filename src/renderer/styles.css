@@ -354,13 +354,20 @@ body {
   transition: opacity 0.3s;
 }
 
-.task-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  margin-top: 4px;
+
+/* All day toggle */
+.allday-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
 }
 
-.task-label {
-  color: #4285f4 !important;
+.allday-toggle input[type="checkbox"] {
+  width: auto;
+  accent-color: #4285f4;
 }
 
 /* Quick Add Tabs */

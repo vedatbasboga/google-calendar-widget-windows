@@ -2,58 +2,78 @@ const EventList = {
   render(container, events, tasks) {
     container.innerHTML = '';
 
-    const hasEvents = events && events.length > 0;
-    const hasTasks = tasks && tasks.length > 0;
+    // Merge events and tasks into one list
+    const allItems = [...(events || [])];
 
-    if (!hasEvents && !hasTasks) {
+    // Add tasks — those with due dates go into their day, those without go at the end
+    const tasksWithDate = [];
+    const tasksNoDate = [];
+    for (const task of (tasks || [])) {
+      if (task.start) {
+        tasksWithDate.push(task);
+      } else {
+        tasksNoDate.push(task);
+      }
+    }
+
+    allItems.push(...tasksWithDate);
+
+    if (allItems.length === 0 && tasksNoDate.length === 0) {
       container.innerHTML = '<div class="empty-state">No upcoming events or tasks</div>';
       return;
     }
 
-    // Group events by day
-    if (hasEvents) {
-      const groups = {};
-      for (const event of events) {
-        const key = DateFormat.getDayKey(event.start);
-        if (!groups[key]) {
-          groups[key] = { label: DateFormat.getDayLabel(event.start), events: [] };
-        }
-        groups[key].events.push(event);
+    // Group all items by day
+    const groups = {};
+    for (const item of allItems) {
+      const key = DateFormat.getDayKey(item.start);
+      if (!groups[key]) {
+        groups[key] = { label: DateFormat.getDayLabel(item.start), items: [] };
       }
-
-      for (const key of Object.keys(groups).sort()) {
-        const group = groups[key];
-        const groupDiv = document.createElement('div');
-        groupDiv.className = 'day-group';
-
-        const label = document.createElement('div');
-        label.className = 'day-label';
-        label.textContent = group.label;
-        groupDiv.appendChild(label);
-
-        for (const event of group.events) {
-          groupDiv.appendChild(EventItem.render(event));
-        }
-
-        container.appendChild(groupDiv);
-      }
+      groups[key].items.push(item);
     }
 
-    // Show tasks in separate section
-    if (hasTasks) {
-      const taskSection = document.createElement('div');
-      taskSection.className = 'day-group task-section';
+    // Sort items within each day: all-day/tasks first, then by time
+    for (const key of Object.keys(groups)) {
+      groups[key].items.sort((a, b) => {
+        if (a.allDay && !b.allDay) return -1;
+        if (!a.allDay && b.allDay) return 1;
+        return new Date(a.start) - new Date(b.start);
+      });
+    }
+
+    for (const key of Object.keys(groups).sort()) {
+      const group = groups[key];
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'day-group';
 
       const label = document.createElement('div');
-      label.className = 'day-label task-label';
-      label.textContent = 'Tasks';
-      taskSection.appendChild(label);
+      label.className = 'day-label';
+      label.textContent = group.label;
+      groupDiv.appendChild(label);
 
-      for (const task of tasks) {
-        taskSection.appendChild(EventItem.render(task));
+      for (const item of group.items) {
+        groupDiv.appendChild(EventItem.render(item));
       }
 
-      container.appendChild(taskSection);
+      container.appendChild(groupDiv);
+    }
+
+    // Tasks without a due date at the bottom
+    if (tasksNoDate.length > 0) {
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'day-group';
+
+      const label = document.createElement('div');
+      label.className = 'day-label';
+      label.textContent = 'No date';
+      groupDiv.appendChild(label);
+
+      for (const task of tasksNoDate) {
+        groupDiv.appendChild(EventItem.render(task));
+      }
+
+      container.appendChild(groupDiv);
     }
   },
 

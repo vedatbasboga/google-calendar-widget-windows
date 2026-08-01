@@ -1,4 +1,7 @@
 const QuickAdd = {
+  _currentType: 'event',
+  _allDay: false,
+
   render(container) {
     const defaults = DateFormat.getDefaultDateTime();
 
@@ -10,12 +13,15 @@ const QuickAdd = {
           <button class="tab-btn" data-type="task">Task</button>
         </div>
         <input type="text" id="qa-title" placeholder="Title" autocomplete="off">
+        <label class="allday-toggle">
+          <input type="checkbox" id="qa-allday"> <span>All day</span>
+        </label>
         <div class="quick-add-row" id="qa-datetime-row">
           <input type="datetime-local" id="qa-start" value="${defaults.start}">
           <input type="datetime-local" id="qa-end" value="${defaults.end}">
         </div>
         <div class="quick-add-row" id="qa-date-row" style="display:none">
-          <input type="date" id="qa-due" value="${defaults.start.split('T')[0]}">
+          <input type="date" id="qa-date" value="${defaults.start.split('T')[0]}">
         </div>
         <div class="quick-add-actions">
           <button class="btn-cancel" id="qa-cancel">Cancel</button>
@@ -25,6 +31,7 @@ const QuickAdd = {
     `;
 
     this._currentType = 'event';
+    this._allDay = false;
 
     const toggle = document.getElementById('quick-add-toggle');
     const form = document.getElementById('quick-add-form');
@@ -32,11 +39,7 @@ const QuickAdd = {
     toggle.addEventListener('click', () => {
       toggle.style.display = 'none';
       form.classList.add('visible');
-      const d = DateFormat.getDefaultDateTime();
-      document.getElementById('qa-start').value = d.start;
-      document.getElementById('qa-end').value = d.end;
-      document.getElementById('qa-due').value = d.start.split('T')[0];
-      document.getElementById('qa-title').value = '';
+      this._resetForm();
       document.getElementById('qa-title').focus();
     });
 
@@ -46,18 +49,14 @@ const QuickAdd = {
         form.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         this._currentType = btn.dataset.type;
-
-        const datetimeRow = document.getElementById('qa-datetime-row');
-        const dateRow = document.getElementById('qa-date-row');
-
-        if (this._currentType === 'task') {
-          datetimeRow.style.display = 'none';
-          dateRow.style.display = '';
-        } else {
-          datetimeRow.style.display = '';
-          dateRow.style.display = 'none';
-        }
+        this._updateDateFields();
       });
+    });
+
+    // All day toggle
+    document.getElementById('qa-allday').addEventListener('change', (e) => {
+      this._allDay = e.target.checked;
+      this._updateDateFields();
     });
 
     document.getElementById('qa-cancel').addEventListener('click', () => {
@@ -75,6 +74,30 @@ const QuickAdd = {
     });
   },
 
+  _resetForm() {
+    const d = DateFormat.getDefaultDateTime();
+    document.getElementById('qa-start').value = d.start;
+    document.getElementById('qa-end').value = d.end;
+    document.getElementById('qa-date').value = d.start.split('T')[0];
+    document.getElementById('qa-title').value = '';
+    document.getElementById('qa-allday').checked = false;
+    this._allDay = false;
+    this._updateDateFields();
+  },
+
+  _updateDateFields() {
+    const datetimeRow = document.getElementById('qa-datetime-row');
+    const dateRow = document.getElementById('qa-date-row');
+
+    if (this._currentType === 'task' || this._allDay) {
+      datetimeRow.style.display = 'none';
+      dateRow.style.display = '';
+    } else {
+      datetimeRow.style.display = '';
+      dateRow.style.display = 'none';
+    }
+  },
+
   async _create() {
     const title = document.getElementById('qa-title').value.trim();
     if (!title) return;
@@ -86,10 +109,17 @@ const QuickAdd = {
     let result;
 
     if (this._currentType === 'task') {
-      const dueDate = document.getElementById('qa-due').value;
+      const dueDate = document.getElementById('qa-date').value;
       result = await window.calendarAPI.createTask({
         title,
         dueDate: dueDate || null,
+      });
+    } else if (this._allDay) {
+      const date = document.getElementById('qa-date').value;
+      result = await window.calendarAPI.createEvent({
+        summary: title,
+        allDay: true,
+        date,
       });
     } else {
       const start = document.getElementById('qa-start').value;

@@ -134,14 +134,26 @@ async function getTaskItems() {
   return allTasks;
 }
 
-async function createEvent({ summary, startDateTime, endDateTime }) {
+async function createEvent({ summary, startDateTime, endDateTime, allDay, date }) {
   const calendar = getCalendar();
 
-  const event = {
-    summary,
-    start: { dateTime: startDateTime, timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-    end: { dateTime: endDateTime, timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-  };
+  let event;
+  if (allDay && date) {
+    const nextDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    const endDate = nextDay.toISOString().split('T')[0];
+    event = {
+      summary,
+      start: { date },
+      end: { date: endDate },
+    };
+  } else {
+    event = {
+      summary,
+      start: { dateTime: startDateTime, timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+      end: { dateTime: endDateTime, timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+    };
+  }
 
   const res = await calendar.events.insert({
     calendarId: 'primary',
