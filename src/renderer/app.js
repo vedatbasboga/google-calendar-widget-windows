@@ -91,7 +91,7 @@ const App = {
       if (theme === 'light') {
         widget.style.background = `rgba(245, 245, 245, ${opacity})`;
       } else {
-        widget.style.background = `rgba(30, 30, 30, ${opacity})`;
+        widget.style.background = `rgba(10, 12, 22, ${opacity})`;
       }
     }
   },
