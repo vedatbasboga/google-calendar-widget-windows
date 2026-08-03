@@ -103,6 +103,11 @@ const App = {
     if (quickAddContainer.children.length > 0) {
       QuickAdd.render(quickAddContainer);
     }
+    // Re-render auth prompt if visible
+    const authContainer = document.getElementById('auth-prompt');
+    if (authContainer && authContainer.children.length > 0) {
+      AuthPrompt.render(authContainer);
+    }
     // Re-render events to update day labels
     this.refreshEvents();
   },

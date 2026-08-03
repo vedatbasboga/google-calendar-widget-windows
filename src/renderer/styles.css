@@ -127,6 +127,193 @@ body {
   cursor: not-allowed;
 }
 
+/* Setup Info Button */
+.setup-info-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 16px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  font-family: inherit;
+}
+
+.setup-info-btn:hover {
+  color: #4285f4;
+  background: rgba(66, 133, 244, 0.08);
+}
+
+/* Setup Guide Overlay */
+#setup-guide-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.setup-guide-panel {
+  background: rgba(14, 16, 28, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  width: 310px;
+  max-height: 440px;
+  display: flex;
+  flex-direction: column;
+}
+
+.setup-guide-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.setup-guide-body {
+  padding: 10px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.setup-guide-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.setup-guide-body::-webkit-scrollbar-thumb {
+  background: rgba(94, 126, 202, 0.25);
+  border-radius: 2px;
+}
+
+.setup-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.step-number {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(66, 133, 244, 0.15);
+  color: #4285f4;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.step-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 3px;
+}
+
+.step-desc {
+  font-size: 11px;
+  color: #888;
+  line-height: 1.5;
+}
+
+.step-desc a {
+  color: #4285f4;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.step-desc a:hover {
+  text-decoration: underline;
+}
+
+.step-desc code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  color: #ccc;
+}
+
+.step-desc strong {
+  color: #bbb;
+}
+
+/* Step open folder button */
+.step-open-folder-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(66, 133, 244, 0.12);
+  border: 1px solid rgba(66, 133, 244, 0.25);
+  color: #4285f4;
+  font-size: 11px;
+  font-family: inherit;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.15s;
+}
+
+.step-open-folder-btn:hover {
+  background: rgba(66, 133, 244, 0.22);
+}
+
+/* Auth error message */
+.auth-error {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.25);
+  color: #f44336;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Settings folder button */
+.settings-folder-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #aaa;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.settings-folder-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
 /* Day Group */
 .day-group {
   padding: 0 16px;
@@ -720,6 +907,57 @@ body {
   border-bottom-color: rgba(0, 0, 0, 0.06);
 }
 
-[data-theme="light"] #settings-overlay {
+[data-theme="light"] #settings-overlay,
+[data-theme="light"] #setup-guide-overlay {
   background: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .setup-guide-panel {
+  background: rgba(250, 250, 250, 0.98);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .setup-guide-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .step-title {
+  color: #222;
+}
+
+[data-theme="light"] .step-desc {
+  color: #666;
+}
+
+[data-theme="light"] .step-desc strong {
+  color: #333;
+}
+
+[data-theme="light"] .step-desc code {
+  background: rgba(0, 0, 0, 0.06);
+  color: #333;
+}
+
+[data-theme="light"] .setup-info-btn {
+  color: #666;
+}
+
+[data-theme="light"] .settings-folder-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #666;
+}
+
+[data-theme="light"] .settings-folder-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+[data-theme="light"] .auth-error {
+  background: rgba(244, 67, 54, 0.06);
+  border-color: rgba(244, 67, 54, 0.2);
+}
+
+[data-theme="light"] .setup-guide-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
 }

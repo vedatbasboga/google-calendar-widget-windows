@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld('calendarAPI', {
   minimizeWindow: () => ipcRenderer.invoke('window:minimize'),
   getSettings: () => ipcRenderer.invoke('settings:get'),
   setSettings: (settings) => ipcRenderer.invoke('settings:set', settings),
+  openAppFolder: () => ipcRenderer.invoke('app:openFolder'),
 });
 
 contextBridge.exposeInMainWorld('electronAPI', {

@@ -1,4 +1,5 @@
-const { ipcMain, BrowserWindow } = require('electron');
+const { ipcMain, BrowserWindow, shell, app } = require('electron');
+const path = require('path');
 const { login, logout, isAuthenticated } = require('./auth');
 const { getEvents, getTaskItems, createEvent, createTask, completeTask } = require('./calendar-api');
 
@@ -26,7 +27,12 @@ function registerIpcHandlers(store) {
       const events = await getEvents();
       return { success: true, events };
     } catch (err) {
-      if (err.code === 401 || err.status === 401 || err.message?.includes('invalid_grant')) {
+      if (err.code === 401 || err.status === 401
+        || err.message?.includes('invalid_grant')
+        || err.message?.includes('No access')
+        || err.message?.includes('No refresh token')
+        || err.message?.includes('token')) {
+        logout();
         return { success: false, error: 'auth_required' };
       }
       return { success: false, error: err.message };
@@ -83,6 +89,13 @@ function registerIpcHandlers(store) {
   ipcMain.handle('window:minimize', (event) => {
     const win = BrowserWindow.fromWebContents(event.sender);
     if (win) win.hide();
+  });
+
+  ipcMain.handle('app:openFolder', () => {
+    const appPath = app.isPackaged
+      ? path.dirname(app.getPath('exe'))
+      : path.join(__dirname, '..', '..');
+    shell.openPath(appPath);
   });
 }
 

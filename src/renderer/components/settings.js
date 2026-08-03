@@ -46,6 +46,14 @@ const Settings = {
               <button class="theme-btn" data-theme="light">${i18n.t('light')}</button>
             </div>
           </div>
+          <div class="settings-row">
+            <button class="settings-folder-btn" id="setting-open-folder">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h3.879a1.5 1.5 0 0 1 1.06.44l1.122 1.12A1.5 1.5 0 0 0 9.62 4H13.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9z"/>
+              </svg>
+              ${i18n.t('openAppFolder')}
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -111,6 +119,10 @@ const Settings = {
         this._saveSetting('theme', btn.dataset.theme);
         App.applyTheme(btn.dataset.theme);
       });
+    });
+
+    document.getElementById('setting-open-folder').addEventListener('click', () => {
+      window.calendarAPI.openAppFolder();
     });
   },
 
