@@ -18,7 +18,7 @@ const EventItem = {
     if (event.passed) div.classList.add('event-passed');
 
     const dotClass = event.allDay ? 'outline' : 'filled';
-    const timeText = event.allDay ? 'All day' : DateFormat.formatTime(event.start);
+    const timeText = event.allDay ? 'All day' : DateFormat.formatTime(event.start) + '–' + DateFormat.formatTime(event.end);
     const colorAttr = event.color ? ` data-color="${event.color}"` : '';
 
     div.innerHTML = `
