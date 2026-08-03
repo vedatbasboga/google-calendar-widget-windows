@@ -14,26 +14,34 @@ const EventItem = {
     return this._renderEvent(div, event);
   },
 
+  _hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  },
+
   _renderEvent(div, event) {
     if (event.passed) div.classList.add('event-passed');
 
     const dotClass = event.allDay ? 'outline' : 'filled';
     const timeText = event.allDay ? 'All day' : DateFormat.formatTime(event.start) + '–' + DateFormat.formatTime(event.end);
-    const colorAttr = event.color ? ` data-color="${event.color}"` : '';
+
+    if (event.color) {
+      div.style.background = this._hexToRgba(event.color, 0.25);
+    }
+
+    const dotStyle = event.color ? ` style="background:${event.color};border-color:${event.color}"` : '';
 
     div.innerHTML = `
-      <div class="event-dot ${dotClass}"${colorAttr}></div>
+      <div class="event-dot ${dotClass}"${dotStyle}></div>
       <div class="event-info">
         <div class="event-time">${timeText}</div>
         <div class="event-title">${this._escape(event.summary)}</div>
       </div>
     `;
 
-    if (event.htmlLink) {
-      div.addEventListener('click', () => {
-        window.open(event.htmlLink, '_blank');
-      });
-    }
+    div.addEventListener('click', () => EventEdit.open(event));
 
     return div;
   },
@@ -59,6 +67,8 @@ const EventItem = {
         <div class="event-title">${this._escape(event.summary)}</div>
       </div>
     `;
+
+    div.querySelector('.event-info').addEventListener('click', () => EventEdit.open(event));
 
     if (!event.completed) {
       const checkbox = div.querySelector('.task-checkbox');

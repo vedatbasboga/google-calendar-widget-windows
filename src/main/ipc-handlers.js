@@ -1,7 +1,7 @@
 const { ipcMain, BrowserWindow, shell, app } = require('electron');
 const path = require('path');
 const { login, logout, isAuthenticated } = require('./auth');
-const { getEvents, getTaskItems, createEvent, createTask, completeTask } = require('./calendar-api');
+const { getEvents, getTaskItems, createEvent, createTask, updateEvent, deleteEvent, deleteTask, completeTask } = require('./calendar-api');
 
 function registerIpcHandlers(store) {
   ipcMain.handle('auth:login', async () => {
@@ -61,6 +61,33 @@ function registerIpcHandlers(store) {
     try {
       const created = await createTask(taskData);
       return { success: true, task: created };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('calendar:updateEvent', async (_event, eventData) => {
+    try {
+      const updated = await updateEvent(eventData);
+      return { success: true, event: updated };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('calendar:deleteEvent', async (_event, { eventId }) => {
+    try {
+      await deleteEvent({ eventId });
+      return { success: true };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('calendar:deleteTask', async (_event, { taskListId, taskId }) => {
+    try {
+      await deleteTask({ taskListId, taskId });
+      return { success: true };
     } catch (err) {
       return { success: false, error: err.message };
     }

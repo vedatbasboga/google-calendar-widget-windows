@@ -2,6 +2,20 @@ const QuickAdd = {
   _currentType: 'event',
   _allDay: false,
   _visible: false,
+  _selectedColor: null,
+
+  _eventColors: [
+    { id: '1', hex: '#7986cb', label: 'Lavender' },
+    { id: '2', hex: '#33b679', label: 'Sage' },
+    { id: '3', hex: '#8e24aa', label: 'Grape' },
+    { id: '4', hex: '#e67c73', label: 'Flamingo' },
+    { id: '5', hex: '#f6bf26', label: 'Banana' },
+    { id: '6', hex: '#f4511e', label: 'Tangerine' },
+    { id: '7', hex: '#039be5', label: 'Peacock' },
+    { id: '9', hex: '#3f51b5', label: 'Blueberry' },
+    { id: '10', hex: '#0b8043', label: 'Basil' },
+    { id: '11', hex: '#d50000', label: 'Tomato' },
+  ],
 
   render(container) {
     const defaults = DateFormat.getDefaultDateTime();
@@ -22,6 +36,9 @@ const QuickAdd = {
         </div>
         <div class="quick-add-row" id="qa-date-row" style="display:none">
           <input type="date" id="qa-date" value="${defaults.start.split('T')[0]}">
+        </div>
+        <div class="color-picker-row" id="qa-color-row">
+          ${this._eventColors.map(c => `<button class="color-dot" data-color-id="${c.id}" style="background:${c.hex}" title="${c.label}"></button>`).join('')}
         </div>
         <div class="quick-add-actions">
           <button class="btn-cancel" id="qa-cancel">Cancel</button>
@@ -50,6 +67,19 @@ const QuickAdd = {
     document.getElementById('qa-allday').addEventListener('change', (e) => {
       this._allDay = e.target.checked;
       this._updateDateFields();
+    });
+
+    // Color picker
+    form.querySelectorAll('.color-dot').forEach((dot) => {
+      dot.addEventListener('click', () => {
+        form.querySelectorAll('.color-dot').forEach((d) => d.classList.remove('selected'));
+        if (this._selectedColor === dot.dataset.colorId) {
+          this._selectedColor = null;
+        } else {
+          dot.classList.add('selected');
+          this._selectedColor = dot.dataset.colorId;
+        }
+      });
     });
 
     document.getElementById('qa-cancel').addEventListener('click', () => {
@@ -92,8 +122,10 @@ const QuickAdd = {
     document.getElementById('qa-allday').checked = false;
     this._allDay = false;
     this._currentType = 'event';
+    this._selectedColor = null;
     const form = document.getElementById('quick-add-form');
     form.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+    form.querySelectorAll('.color-dot').forEach((d) => d.classList.remove('selected'));
     form.querySelector('[data-type="event"]').classList.add('active');
     this._updateDateFields();
   },
@@ -101,6 +133,7 @@ const QuickAdd = {
   _updateDateFields() {
     const datetimeRow = document.getElementById('qa-datetime-row');
     const dateRow = document.getElementById('qa-date-row');
+    const colorRow = document.getElementById('qa-color-row');
 
     if (this._currentType === 'task' || this._allDay) {
       datetimeRow.style.display = 'none';
@@ -109,6 +142,8 @@ const QuickAdd = {
       datetimeRow.style.display = '';
       dateRow.style.display = 'none';
     }
+
+    colorRow.style.display = this._currentType === 'task' ? 'none' : '';
   },
 
   async _create() {
@@ -133,6 +168,7 @@ const QuickAdd = {
         summary: title,
         allDay: true,
         date,
+        colorId: this._selectedColor || undefined,
       });
     } else {
       const start = document.getElementById('qa-start').value;
@@ -141,6 +177,7 @@ const QuickAdd = {
         summary: title,
         startDateTime: new Date(start).toISOString(),
         endDateTime: new Date(end).toISOString(),
+        colorId: this._selectedColor || undefined,
       });
     }
 
