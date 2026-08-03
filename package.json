@@ -38,6 +38,12 @@
       "icon": "build/icon.ico",
       "signAndEditExecutable": false
     },
+    "extraResources": [
+      {
+        "from": ".env",
+        "to": ".env"
+      }
+    ],
     "nsis": {
       "oneClick": true,
       "perMachine": false,

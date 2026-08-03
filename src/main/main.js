@@ -6,7 +6,9 @@ const { createTray } = require('./tray');
 const { registerIpcHandlers } = require('./ipc-handlers');
 
 // Load .env file
-const envPath = path.join(__dirname, '..', '..', '.env');
+const envPath = app.isPackaged
+  ? path.join(process.resourcesPath, '.env')
+  : path.join(__dirname, '..', '..', '.env');
 if (fs.existsSync(envPath)) {
   for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
     const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);

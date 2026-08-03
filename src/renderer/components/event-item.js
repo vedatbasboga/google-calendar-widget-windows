@@ -53,12 +53,9 @@ const EventItem = {
     div.className = 'event-item task-item';
     if (event.completed) div.classList.add('task-completed');
 
-    const timeText = event.start ? DateFormat.formatTime(event.start) : 'No date';
-
     div.innerHTML = `
       <input type="checkbox" class="task-checkbox" ${event.completed ? 'checked disabled' : ''} title="Complete task">
       <div class="event-info">
-        <div class="event-time">${timeText}</div>
         <div class="event-title">${this._escape(event.summary)}</div>
       </div>
     `;
