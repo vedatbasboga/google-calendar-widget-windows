@@ -6,6 +6,22 @@ A transparent, always-on-top desktop widget that displays your Google Calendar e
 ![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+## Screenshots
+
+![Desktop Widget](screenshots/desktop.png)
+
+| Dark Theme | Light Theme |
+|:---:|:---:|
+| ![Dark Theme](screenshots/home_dark.png) | ![Light Theme](screenshots/home_light.png) |
+
+| Add Event/Task | Settings (Dark) | Settings (Light) |
+|:---:|:---:|:---:|
+| ![Add Event](screenshots/add_event_task.png) | ![Settings Dark](screenshots/settings_dark.png) | ![Settings Light](screenshots/settings_light.png) |
+
+| System Tray |
+|:---:|
+| ![System Tray](screenshots/bottom_bar.png) |
+
 ## Features
 
 - Semi-transparent, draggable widget (always on top)
