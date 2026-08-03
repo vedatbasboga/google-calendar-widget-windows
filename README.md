@@ -28,9 +28,10 @@ A transparent, always-on-top desktop widget that displays your Google Calendar e
 - Dark and Light theme support
 - Events and tasks from all your Google Calendars (including birthdays)
 - Grouped by day (Today, Tomorrow, etc.)
-- Quick creation of both events and tasks
-- Complete tasks directly from the widget with a checkbox
-- Click any event to open it in Google Calendar
+- Quick creation of both events and tasks (with color selection)
+- Edit events — click any event to update title, time, or color
+- Delete events and tasks directly from the widget
+- Complete tasks with a single checkbox click
 - Adjustable opacity, refresh interval, and language (English / Turkish)
 - System tray integration (show/hide, refresh, sign out, quit)
 - Secure token storage using Windows DPAPI encryption
@@ -110,19 +111,22 @@ Before using the widget, you need to create Google OAuth credentials:
 |--------|-----|
 | Move the widget | Drag the header area |
 | Add event or task | Click the **+** button |
-| Refresh events | Click the refresh button |
-| Hide the widget | Click the minimize button or system tray icon |
+| Edit an event | Click on the event card → edit panel opens |
+| Delete an event or task | Click the event/task → click **Delete** |
 | Complete a task | Check the checkbox next to it |
-| Open event in Calendar | Click on the event |
+| Refresh events | Click the refresh button |
+| Hide the widget | Click the **−** button or system tray icon |
 | Access settings | Click the gear icon |
 | Quit the app | Right-click the system tray icon → **Quit** |
 
 ### Settings
 
-- **Language** — English or Turkish
-- **Opacity** — 50% to 100%
-- **Refresh Interval** — 1, 2, 5, 10, or 15 minutes
-- **Theme** — Dark or Light
+| Setting | Options |
+|---------|---------|
+| Language | English, Turkish |
+| Opacity | 50% – 100% |
+| Refresh Interval | 1, 2, 5, 10, or 15 minutes |
+| Theme | Dark, Light |
 
 ## Uninstall
 
