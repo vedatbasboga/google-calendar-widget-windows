@@ -15,10 +15,10 @@ body {
 #widget {
   width: 340px;
   height: 500px;
-  background: rgba(10, 12, 22, 0.92);
+  background: rgba(0, 0, 0, 0.92);
   backdrop-filter: blur(20px);
   border-radius: 12px;
-  border: 1px solid rgba(94, 126, 202, 0.1);
+  border: 1px solid rgba(108, 139, 221, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -29,7 +29,7 @@ body {
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(94, 126, 202, 0.12);
+  border-bottom: 1px solid rgba(108, 139, 221, 0.12);
   -webkit-app-region: drag;
 }
 
@@ -42,9 +42,10 @@ body {
 
 .header-btn {
   -webkit-app-region: no-drag;
-  background: none;
+  background: #6c8bdd;
   border: none;
-  color: #aaa;
+  color: #444958;
+  margin-left: 4px;
   cursor: pointer;
   width: 28px;
   height: 28px;
@@ -57,8 +58,8 @@ body {
 }
 
 .header-btn:hover {
-  background: rgba(94, 126, 202, 0.15);
-  color: #fff;
+  background: #7d99e3;
+  color: #444958;
 }
 
 /* Content */
@@ -77,7 +78,7 @@ body {
 }
 
 #content::-webkit-scrollbar-thumb {
-  background: rgba(94, 126, 202, 0.25);
+  background: rgba(108, 139, 221, 0.35);
   border-radius: 2px;
 }
 
@@ -107,7 +108,7 @@ body {
 }
 
 .auth-btn {
-  background: #4285f4;
+  background: #6c8bdd;
   color: #fff;
   border: none;
   padding: 10px 24px;
@@ -119,7 +120,7 @@ body {
 }
 
 .auth-btn:hover {
-  background: #3367d6;
+  background: #7d99e3;
 }
 
 .auth-btn:disabled {
@@ -146,8 +147,8 @@ body {
 }
 
 .setup-info-btn:hover {
-  color: #4285f4;
-  background: rgba(66, 133, 244, 0.08);
+  color: #6c8bdd;
+  background: rgba(108, 139, 221, 0.08);
 }
 
 /* Setup Guide Overlay */
@@ -162,8 +163,8 @@ body {
 }
 
 .setup-guide-panel {
-  background: rgba(14, 16, 28, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(68, 73, 88, 0.98);
+  border: 1px solid rgba(108, 139, 221, 0.15);
   border-radius: 10px;
   width: 310px;
   max-height: 440px;
@@ -192,7 +193,7 @@ body {
 }
 
 .setup-guide-body::-webkit-scrollbar-thumb {
-  background: rgba(94, 126, 202, 0.25);
+  background: rgba(108, 139, 221, 0.35);
   border-radius: 2px;
 }
 
@@ -206,8 +207,8 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: rgba(66, 133, 244, 0.15);
-  color: #4285f4;
+  background: rgba(108, 139, 221, 0.15);
+  color: #6c8bdd;
   font-size: 11px;
   font-weight: 700;
   display: flex;
@@ -236,7 +237,7 @@ body {
 }
 
 .step-desc a {
-  color: #4285f4;
+  color: #6c8bdd;
   cursor: pointer;
   text-decoration: none;
 }
@@ -262,9 +263,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: rgba(66, 133, 244, 0.12);
-  border: 1px solid rgba(66, 133, 244, 0.25);
-  color: #4285f4;
+  background: rgba(108, 139, 221, 0.12);
+  border: 1px solid rgba(108, 139, 221, 0.25);
+  color: #6c8bdd;
   font-size: 11px;
   font-family: inherit;
   padding: 5px 10px;
@@ -275,7 +276,7 @@ body {
 }
 
 .step-open-folder-btn:hover {
-  background: rgba(66, 133, 244, 0.22);
+  background: rgba(108, 139, 221, 0.22);
 }
 
 /* Auth error message */
@@ -328,6 +329,16 @@ body {
   padding: 12px 0 6px;
 }
 
+.day-label.today {
+  background: #6c8bdd;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  display: inline-block;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
 /* Event Item */
 .event-item {
   display: flex;
@@ -336,7 +347,7 @@ body {
   gap: 10px;
   cursor: pointer;
   border-radius: 8px;
-  background: rgba(94, 126, 202, 0.18);
+  background: #525873;
   margin-bottom: 3px;
   transition: background 0.15s;
 }
@@ -346,7 +357,7 @@ body {
 }
 
 .event-item:hover {
-  background: rgba(94, 126, 202, 0.28);
+  background: #5d6480;
 }
 
 .event-dot {
@@ -358,12 +369,12 @@ body {
 }
 
 .event-dot.filled {
-  background: #4285f4;
+  background: #6c8bdd;
 }
 
 .event-dot.outline {
   background: transparent;
-  border: 2px solid #4285f4;
+  border: 2px solid #6c8bdd;
 }
 
 .event-info {
@@ -393,7 +404,7 @@ body {
 .quick-add-toggle {
   width: 100%;
   background: none;
-  border: 1px dashed rgba(94, 126, 202, 0.25);
+  border: 1px dashed rgba(108, 139, 221, 0.25);
   color: #888;
   padding: 8px;
   border-radius: 8px;
@@ -403,7 +414,7 @@ body {
 }
 
 .quick-add-toggle:hover {
-  border-color: rgba(94, 126, 202, 0.4);
+  border-color: rgba(108, 139, 221, 0.4);
   color: #bbb;
 }
 
@@ -432,7 +443,7 @@ body {
 }
 
 .quick-add-form input:focus {
-  border-color: #4285f4;
+  border-color: #6c8bdd;
 }
 
 .quick-add-form input::placeholder {
@@ -455,7 +466,7 @@ body {
 }
 
 .btn-create {
-  background: #4285f4;
+  background: #6c8bdd;
   color: #fff;
   border: none;
   padding: 7px 16px;
@@ -466,7 +477,7 @@ body {
 }
 
 .btn-create:hover {
-  background: #3367d6;
+  background: #7d99e3;
 }
 
 .btn-create:disabled {
@@ -544,12 +555,12 @@ body {
 }
 
 .task-checkbox:hover {
-  border-color: #4285f4;
+  border-color: #6c8bdd;
 }
 
 .task-checkbox:checked {
-  background: #4285f4;
-  border-color: #4285f4;
+  background: #6c8bdd;
+  border-color: #6c8bdd;
 }
 
 .task-completing {
@@ -579,7 +590,7 @@ body {
 
 .allday-toggle input[type="checkbox"] {
   width: auto;
-  accent-color: #4285f4;
+  accent-color: #6c8bdd;
 }
 
 /* Quick Add Tabs */
@@ -606,9 +617,9 @@ body {
 }
 
 .tab-btn.active {
-  background: rgba(66, 133, 244, 0.15);
-  border-color: #4285f4;
-  color: #4285f4;
+  background: rgba(108, 139, 221, 0.15);
+  border-color: #6c8bdd;
+  color: #6c8bdd;
 }
 
 /* Color variants for event dots */
@@ -626,15 +637,15 @@ body {
 
 /* Add button circle border */
 #add-btn {
-  border: 1.5px solid #8aa4e0;
+  background: #6c8bdd;
+  border: none;
   border-radius: 50%;
-  color: #8aa4e0;
+  color: #444958;
 }
 
 #add-btn:hover {
-  border-color: #a8bfef;
-  color: #fff;
-  background: rgba(94, 126, 202, 0.25);
+  background: #7d99e3;
+  color: #444958;
 }
 
 /* Settings overlay */
@@ -649,8 +660,8 @@ body {
 }
 
 .settings-panel {
-  background: rgba(14, 16, 28, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(68, 73, 88, 0.98);
+  border: 1px solid rgba(108, 139, 221, 0.15);
   border-radius: 10px;
   width: 290px;
   max-height: 420px;
@@ -705,7 +716,7 @@ body {
 }
 
 .settings-row select:focus {
-  border-color: #4285f4;
+  border-color: #6c8bdd;
 }
 
 .slider-row {
@@ -716,7 +727,7 @@ body {
 
 .slider-row input[type="range"] {
   flex: 1;
-  accent-color: #4285f4;
+  accent-color: #6c8bdd;
   cursor: pointer;
 }
 
@@ -750,14 +761,14 @@ body {
 }
 
 .theme-btn.active {
-  background: rgba(66, 133, 244, 0.15);
-  border-color: #4285f4;
-  color: #4285f4;
+  background: rgba(108, 139, 221, 0.15);
+  border-color: #6c8bdd;
+  color: #6c8bdd;
 }
 
 /* Light theme */
 [data-theme="light"] #widget {
-  background: rgba(245, 245, 245, 0.92);
+  background: rgba(232, 234, 240, 0.92);
   border-color: rgba(0, 0, 0, 0.08);
 }
 
@@ -770,16 +781,19 @@ body {
 }
 
 [data-theme="light"] .header-btn {
-  color: #666;
+  background: #4a6bc4;
+  color: #e8eaf0;
 }
 
 [data-theme="light"] .header-btn:hover {
-  background: rgba(0, 0, 0, 0.08);
-  color: #111;
+  background: #5a7bd4;
+  color: #e8eaf0;
 }
 
 [data-theme="light"] #add-btn {
-  border-color: #666;
+  background: #4a6bc4;
+  color: #e8eaf0;
+  border: none;
 }
 
 [data-theme="light"] #header {
@@ -799,11 +813,11 @@ body {
 }
 
 [data-theme="light"] .event-item {
-  background: rgba(0, 0, 0, 0.04);
+  background: #dde0e9;
 }
 
 [data-theme="light"] .event-item:hover {
-  background: rgba(0, 0, 0, 0.08);
+  background: #d0d4e0;
 }
 
 [data-theme="light"] .quick-add-toggle {
@@ -859,7 +873,7 @@ body {
 }
 
 [data-theme="light"] .settings-panel {
-  background: rgba(250, 250, 250, 0.98);
+  background: rgba(232, 234, 240, 0.98);
   border-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -913,7 +927,7 @@ body {
 }
 
 [data-theme="light"] .setup-guide-panel {
-  background: rgba(250, 250, 250, 0.98);
+  background: rgba(232, 234, 240, 0.98);
   border-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -956,6 +970,31 @@ body {
 [data-theme="light"] .auth-error {
   background: rgba(244, 67, 54, 0.06);
   border-color: rgba(244, 67, 54, 0.2);
+}
+
+[data-theme="light"] .day-label.today {
+  background: #4a6bc4;
+  color: #fff;
+}
+
+[data-theme="light"] .auth-btn {
+  background: #4a6bc4;
+}
+
+[data-theme="light"] .auth-btn:hover {
+  background: #5a7bd4;
+}
+
+[data-theme="light"] .btn-create {
+  background: #4a6bc4;
+}
+
+[data-theme="light"] .btn-create:hover {
+  background: #5a7bd4;
+}
+
+[data-theme="light"] .quick-add-form input:focus {
+  border-color: #4a6bc4;
 }
 
 [data-theme="light"] .setup-guide-body::-webkit-scrollbar-thumb {

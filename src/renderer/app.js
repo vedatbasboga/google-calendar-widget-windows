@@ -82,6 +82,7 @@ const App = {
 
   applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+    this.applyOpacity(this.settings?.opacity || 0.92);
   },
 
   applyOpacity(opacity) {
@@ -89,9 +90,9 @@ const App = {
     if (widget) {
       const theme = document.documentElement.getAttribute('data-theme');
       if (theme === 'light') {
-        widget.style.background = `rgba(245, 245, 245, ${opacity})`;
+        widget.style.background = `rgba(232, 234, 240, ${opacity})`;
       } else {
-        widget.style.background = `rgba(10, 12, 22, ${opacity})`;
+        widget.style.background = `rgba(0, 0, 0, ${opacity})`;
       }
     }
   },

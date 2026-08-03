@@ -42,13 +42,14 @@ const EventList = {
       });
     }
 
+    const todayKey = DateFormat.getDayKey(new Date().toISOString());
     for (const key of Object.keys(groups).sort()) {
       const group = groups[key];
       const groupDiv = document.createElement('div');
       groupDiv.className = 'day-group';
 
       const label = document.createElement('div');
-      label.className = 'day-label';
+      label.className = key === todayKey ? 'day-label today' : 'day-label';
       label.textContent = group.label;
       groupDiv.appendChild(label);
 
