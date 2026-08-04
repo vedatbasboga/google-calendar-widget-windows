@@ -1,6 +1,6 @@
 {
   "name": "google-calendar-widget",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A desktop widget that displays your Google Calendar events",
   "main": "src/main/main.js",
   "scripts": {
